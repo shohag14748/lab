@@ -145,6 +145,7 @@ header .content .nav li a:hover::after {
       height: 100%;
         min-height: 100vh;
     }
+
     .swiper-slide {
       text-align: center;
       font-size: 18px;
@@ -227,12 +228,13 @@ header .content .nav li a:hover::after {
     height: 60px;
     top: 50%;
     right: 40px;
-    left: auto;
+    left: auto !important;
     transform: translate(0%,-50%);
-    width: 100px;
+    width: 100px !important;
     text-align: right;
     font-weight: 600;
     overflow: hidden;
+    display: block;
 }
 .swiper-pagination-current{
     font-size: 35px;
@@ -261,37 +263,84 @@ header .content .nav li a:hover::after {
     margin: auto;
 }
 
-.swiper-slide{
+.mainSwiper .swiper-slide{
     height: 100vh;
     top: 50% !important;
     position: relative;
+/*
     background-image: url(png-bg.png);
     background-repeat: no-repeat;
     background-position: right 150px top 70px;
-    background-size: 50%
+    background-size: 50%;
+*/
+    
 }
-.swiper-slide .content{
+/*
+.mainSwiper .swiper-slide::after{
+    content: '';
+    width: 100%;
+    height: 100%;
+    max-height: 700px;
+    background-image: url(animated-gif-video.gif);
+    background-repeat: no-repeat;
+    background-position: right 150px center;
+    background-size: auto 50%;
+}
+*/
+.main-content .container{
+    position: relative;
+    z-index: 9
+}
+.main-content .container::after{
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: url(animated-gif-video.gif);
+    background-repeat: no-repeat;
+    background-position: right 0px center;
+    background-size: auto 50%;
+    position: absolute;
+    z-index: -1;
+}
+/*
+.main-content .container::before{
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: url(animated-gif-video.gif);
+    background-repeat: no-repeat;
+    background-position:right 0px top ;
+    background-size: auto 50%;
+    position: absolute;
+    z-index: -1;
+}
+*/
+.mainSwiper .swiper-slide .content{
     text-align: left;
     left: 20px;
     width: 100%;
     padding-left: 150px;
-    font-size: 38px;
-    line-height: 65px;
+    font-size: 32px;
+    line-height: 50px;
     color: #fff;
     position: absolute;
     top: 45.7vh;
 }
-.swiper-slide .content h1{
+.mainSwiper .swiper-slide .content h1{
     overflow: hidden;
 }
-.swiper-slide .content h1 span{
+.mainSwiper .swiper-slide .content h1 span{
     position: relative;
     display: block;
 }
-.swiper-slide .content .button{
-    margin-top: 99px;
+.mainSwiper .swiper-slide .content .button{
+    margin-top: 70px;
 }
-.swiper-slide .content .button a{
+.mainSwiper .swiper-slide .content .button a{
     font-size: 18px;
     color: #fff;
     font-weight: 300;
@@ -302,7 +351,7 @@ header .content .nav li a:hover::after {
     text-decoration: none;
     position: relative;
 }
-.swiper-slide .content .button a::after{
+.mainSwiper .swiper-slide .content .button a::after{
     content: '';
     position: absolute;
     width: 60px;
@@ -313,34 +362,38 @@ header .content .nav li a:hover::after {
     z-index: -1;
     transition: .3s;
 }
-.swiper-slide .content .button a:hover::after{
+.mainSwiper .swiper-slide .content .button a:hover::after{
     width: 100% !important;
     background: rgba(237,62,158,1);
 }
-.swiper-slide .content .button a .arrow{
+.mainSwiper .swiper-slide .content .button a .arrow{
     width: 8px;
     position: absolute;
     right: 25px;
     top: 16px;
 }
-.swiper-slide .content .button a .arrow path{
+.mainSwiper .swiper-slide .content .button a .arrow path{
     fill:#fff;
-    
+    transition: .3s;
 }
-.swiper-slide .content .button a .border{
+.mainSwiper .swiper-slide .content .button a .border{
     z-index: 1;
     position: absolute;
     left: 0px;
     top: 0px;
+    height: 100%;
+    width: 100%;
 }
-.swiper-slide .content .button a .border rect{
-    width: 220px;
-    height: 52px;
+.mainSwiper .swiper-slide .content .button a .border rect{
     fill:transparent;
     stroke:#ed3e9e;
-    stroke-width:2;
+    stroke-width:3;
+    height: 100%;
+    width: 100%
 }
-
+.popUpSwiper .swiper-slide .content .button a:hover .arrow path{
+    fill:#fff;
+}
 
 
 
@@ -452,7 +505,6 @@ body.active .logo h2 span{
 }
 
 
-/*
 .texture{
     max-width: 1200px;
     position: relative;
@@ -462,7 +514,7 @@ body.active .logo h2 span{
     position: absolute;
     width: 2px;
     height: 100vh;
-    background: linear-gradient(#6736b3,#1b073c);
+    background: linear-gradient(#6136a5,#311958);
     left: 0;
     opacity: .5;
 }
@@ -477,25 +529,443 @@ body.active .logo h2 span{
 .texture span:nth-child(10){left: 90%}
 .texture span:nth-child(11){left: 100%}
 
-*/
 
 
 
 
 
+.catagories{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 999;
+    transition: .3s;
+    opacity: 0;
+    pointer-events:none;
+    overflow: hidden;
+    background-image: linear-gradient( to top, rgb(44,24,77) 51%, rgb(56,27,101) 77%, rgb(68,30,125) 100%);
+}
+.catagories.active{
+    opacity: 1;
+    pointer-events:all;
+}
+.catagories::before,
+.catagories::after{
+    content: '';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    transition: .5s;
+    z-index: 999;
+    background: rgba(237,62,158,.4);
+    top: 100%;
+}
+.catagories::after{
+    height: 150%;
+}
+.catagories::before{
+    background: rgba(237,62,158,1);
+}
+.catagories.active::after,
+.catagories.active::before{
+    animation: beforeslide 1s ease-in;
+}
+.catagories.active::before{
+    animation-delay: .1s;
+}
+@keyframes beforeslide{
+    0%{top: 100%;}
+    50%{top: 0%;}
+    100%{top: -100%;}
+}
+.catagories .container{
+    max-width: 1200px;
+    margin: auto;
+    padding-left: 12%;
+    position: relative;
+}
+
+@media(max-width:1200px){
+    .catagories .container{
+        padding-left: 150px;
+    }
+    
+}
+.catagories .close{
+    position: absolute;
+    z-index: 99999999;
+    right: 70px;
+    top: 10px;
+    width: 35px;
+    padding: 6px 0 0px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.catagories .close svg{
+    width:35px;
+    position: relative;
+    left: 100%;
+}
+.catagories .close path{
+    fill:#fff;
+    transition: .3s;
+}
+.catagories .close:hover path{
+    fill:#ed3e9e;
+}
+.catagories.active .close svg{
+    animation: close-popup .5s ease-in;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+}
+@keyframes close-popup{
+    100%{left: 0;}
+}
+.popUpSwiper{
+    position: static;
+    height: 100vh;
+    overflow: hidden;
+    transition: 1s;
+}
+.popUpSwiper .swiper-slide{
+    width: 31%;
+    height: 100vh;
+    position: relative;
+    text-align: left;
+    padding: 20px;
+    align-items: flex-start;
+    overflow: hidden;
+    background-image: linear-gradient( to top, rgb(44,24,77) 51%, rgb(56,27,101) 77%, rgb(68,30,125) 100%);
+    transition: .5s;
+    margin-top: 100%;
+    background-position:  left top;
+    background-repeat: no-repeat;
+    background-size: 140% ;
+}
+
+.popUpSwiper .swiper-slide:hover {
+    background-image: url(animated-gif-video.gif),linear-gradient( to top, rgb(44,24,77) 0%, rgb(86,45,149) 100%);
+    background-position: top -50px right -190px , left top;
+}
+.popUpSwiper .swiper-slide::before{
+    content: '';
+    width: 3px;
+    height: 100%;
+    position: absolute;
+    background: linear-gradient(#6c3cb7,#321b56);
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+
+.catagories.active .popUpSwiper .swiper-slide{
+    animation: slide-ani 1s ease-in;
+    animation-fill-mode: forwards;
+}
+
+@keyframes slide-ani{
+    100%{margin-top: 0px;}
+}
+.catagories.active .popUpSwiper .swiper-slide:nth-child(2){
+    animation-delay: .1s;
+}
+.catagories.active .popUpSwiper .swiper-slide:nth-child(3){
+    animation-delay: .2s;
+}
+.catagories.active .popUpSwiper .swiper-slide:nth-child(4){
+    animation-delay: .3s;
+}
+.catagories.active .popUpSwiper .swiper-slide:nth-child(5){
+    animation-delay: .4s;
+}
+
+
+
+.popUpSwiper .swiper-slide .content .button{
+    margin-top: 0px;
+    position: absolute;
+    bottom: 50px;
+    left: -165.3px;
+    transition: .4s;
+}
+.popUpSwiper .swiper-slide .content .button a{
+    font-size: 18px;
+    color: #fff;
+    font-weight: 300;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 12px 76px 12px 20px;
+    line-height: 30px;
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+}
+.popUpSwiper .swiper-slide .content .button a::after{
+    content: '';
+    position: absolute;
+    width: 60px;
+    background: rgba(237,62,158,.4);
+    right: 0;
+    height: 100%;
+    top: 0;
+    z-index: -1;
+    transition: .4s;
+    opacity: 0;
+}
+.popUpSwiper .swiper-slide .content .button a:hover::after{
+    width: 100% !important;
+    background: rgba(237,62,158,1);
+}
+.popUpSwiper .swiper-slide .content .button a .arrow{
+    width: 8px;
+    position: absolute;
+    right: 25px;
+    top: 16px;
+}
+.popUpSwiper .swiper-slide .content .button a .arrow path{
+    fill:#fff;
+    transition: .3s;
+}
+.popUpSwiper .swiper-slide .content .button a .border{
+    opacity: 0;
+    z-index: 1;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    transition: .3s;
+}
+.popUpSwiper .swiper-slide .content .button a .border rect{
+    fill:transparent;
+    stroke:#ed3e9e;
+    stroke-width:3;
+    height: 100%;
+    width: 100%
+}
+
+
+.popUpSwiper .swiper-slide:hover .content .button{
+    left: 20px;
+}
+.popUpSwiper .swiper-slide:hover .content .button a .border{
+    opacity: 1;
+}
+.popUpSwiper .swiper-slide:hover  .content .button a::after{
+    opacity: 1;
+}
+.popUpSwiper .swiper-slide:hover .content .button a .arrow path{
+    fill:#089ee9;
+}
+.popUpSwiper .swiper-slide .content .button a:hover .arrow path{
+    fill:#fff;
+}
+
+
+.popUpSwiper .swiper-slide .content h6{
+    font-size: 20px;
+    font-weight: 400;
+    color: #fff;
+    padding-bottom: 30px;
+    position: relative;
+    display: inline-block;
+    letter-spacing: 2px
+}
+.popUpSwiper .swiper-slide .content h6::after{
+    content: '';
+    height: 4px;
+    width: 100%;
+    background: #089ee9;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 3px;
+}
+.popUpSwiper .swiper-slide .content .icon{
+    position: relative;
+    margin: 30px 0 20px;
+}
+.popUpSwiper .swiper-slide .content .icon img{
+    width: 120px;
+    border-radius: 50%;
+}
+.popUpSwiper .swiper-slide .content .icon svg{
+    position: absolute;
+    left: 0;top: 0;
+    width: 120px;
+    height: 120px;
+}
+.popUpSwiper .swiper-slide .content .icon svg circle{
+    r: 48.5%;
+    top: 50px;
+    left: 50px;
+    fill:transparent;
+    stroke:#6033a7;
+    stroke-width:3;
+    
+}
+.popUpSwiper .swiper-slide .content h2{
+    color: #fff;
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin: 40px 0 20px;
+}
+.popUpSwiper .swiper-slide .content h5{
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: #ed3e9e;
+    position: relative;
+    overflow: hidden;
+    transition: .3s;
+    height: 28px;
+}
+.popUpSwiper .swiper-slide .content p{
+    font-size: 15px;
+    color: #fff;
+    line-height: 20px;
+    margin-bottom: 20px;
+}
+.popUpSwiper .swiper-slide .content ul{
+    padding-left: 20px;
+    margin: 10px;
+}
+.popUpSwiper .swiper-slide .content li{
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.popUpSwiper .swiper-slide .content .text{
+    opacity: 0;
+    margin-top: 20px;
+    transition: .5s;
+}
+
+.popUpSwiper .swiper-slide:hover .text{
+    opacity: 1;
+    margin-top: 0;
+}
+.popUpSwiper .swiper-slide:hover h5{
+    height: 0px;
+}
+
+
+.catagories.active .popUpSwiper .content h5,
+.catagories.active .popUpSwiper .content h6{
+    overflow: hidden;
+}
+.catagories.active .popUpSwiper .content h5 span,
+.catagories.active .popUpSwiper .content h6 span{
+     animation: popup-menu-h6 .6s ease-in;
+    position: relative;
+    animation-delay: 1.4s;
+    animation-fill-mode: forwards;
+    top: 50px;
+}
+.catagories.active .popUpSwiper .content h5 span{
+    animation-delay: 1.6s;
+}
+@keyframes popup-menu-h6 {
+    0%{top: 50px;}
+    100%{top: 0;}
+}
+.catagories.active .popUpSwiper .content h2{
+    overflow: hidden;
+}
+.catagories.active .popUpSwiper .content h2 span{
+     animation: popup-menu-h6 .6s ease-in;
+    position: relative;
+    animation-delay: 1.4s;
+    animation-fill-mode: forwards;
+    top: 50px;
+}
+@keyframes popup-menu-h6 {
+    0%{top: 50px;}
+    100%{top: 0;}
+}
 
 
 
 
+.catagories.active .popUpSwiper .swiper-slide .content .icon img{
+    transform: scale(.2);
+     animation: popup-menu-icon 1s cubic-bezier(.42,.27,.3,1.63);
+    animation-fill-mode: forwards;
+    animation-delay: 1.2s;
+    opacity: 0;
+    
+}
+@keyframes popup-menu-icon {
+    0%{transform: scale(.2);opacity: 1;}
+    100%{transform: scale(1);opacity: 1;}
+}
+
+.popUpSwiper .swiper-slide .content .icon svg circle{
+    r: 48.5%;
+    top: 50px;
+    left: 50px;
+    fill:transparent;
+    stroke:#6033a7;
+    stroke-width:3;
+    
+}
 
 
+.catagories.active .popUpSwiper .swiper-slide .content .icon svg circle{
+    animation: iconstrokeCircle .8s ease-in;
+    animation-fill-mode: forwards;
+    animation-delay: 1.2s;
+    opacity: 0;
+}
+@keyframes iconstrokeCircle{
+	0%{
+		stroke-dasharray: 0 120;
+		stroke-dashoffset: -60; 
+        opacity: 1;
+	}
+	100%{
+		stroke-dasharray: 120 0;
+		stroke-dashoffset:120; 
+        opacity: 1;
+	}
+}
 
-
-
-
-
-
-
-
-
+.catagories.active .swiper-button-next svg circle,
+.catagories.active .swiper-button-prev svg circle{
+    animation: popupstrokeCircle .8s ease-in;
+    animation-fill-mode: forwards;
+    animation-delay: 1.4s;
+    opacity: 0;
+}
+@keyframes popupstrokeCircle{
+	0%{
+		stroke-dasharray: 0 120;
+		stroke-dashoffset: -60; 
+        opacity: 1;
+	}
+	100%{
+		stroke-dasharray: 120 0;
+		stroke-dashoffset:120; 
+        opacity: 1;
+	}
+}
+.catagories.active .swiper-button-next,
+.catagories.active .swiper-button-prev {
+    animation: oppa .8s ease-in;
+    animation-fill-mode: forwards;
+    animation-delay: 1.4s;
+    opacity: 0;
+}
+@keyframes oppa{
+	0%{
+        opacity: 1;
+	}
+	100%{
+        opacity: 1;
+	}
+}
 
