@@ -297,12 +297,14 @@ header .content .nav li a:hover::after {
     height: 100%;
     top: 0;
     left: 0;
-    background-image: url(animated-gif-video.gif);
+    background-image: url(ok-ok.gif);
+/*    background-image: url(ok3.gif);*/
     background-repeat: no-repeat;
-    background-position: right 0px center;
-    background-size: auto 50%;
+    background-position: left 90px center;
+    background-size: 45% auto;
     position: absolute;
     z-index: -1;
+    transform: rotate(180deg);
 }
 /*
 .main-content .container::before{
@@ -319,6 +321,8 @@ header .content .nav li a:hover::after {
     z-index: -1;
 }
 */
+
+
 .mainSwiper .swiper-slide .content{
     text-align: left;
     left: 20px;
